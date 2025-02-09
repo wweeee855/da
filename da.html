@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ты будешь моей сосиской?</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100vw; /* Ширина равна ширине экрана */
+            height: 100vh; /* Высота равна высоте экрана */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background-color: pink; /* Розовый фон */
+            font-family: Arial, sans-serif;
+            position: relative;
+            overflow: hidden; /* Чтобы кнопки не выходили за пределы экрана */
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            position: relative; /* Для корректного позиционирования кнопок */
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: white;
+            color: pink;
+            transition: all 0.3s ease; /* Плавное увеличение и перемещение */
+        }
+
+        button:hover {
+            background-color: #ffcccb;
+        }
+
+        #noButton {
+            position: static; /* Изначально кнопка "Нет" находится в потоке */
+        }
+    </style>
+</head>
+<body>
+    <h1>Ты будешь моей сосиской?</h1>
+    <div class="buttons">
+        <button id="yesButton">Да</button>
+        <button id="noButton">Нет</button>
+    </div>
+
+    <script>
+        const yesButton = document.getElementById('yesButton');
+        const noButton = document.getElementById('noButton');
+
+        // При нажатии на "Да" открываем ссылку с картинкой
+        yesButton.addEventListener('click', () => {
+            window.open('https://images.app.goo.gl/cTjqrBnCPdzkTEoR6', '_blank');
+        });
+
+        // При нажатии на "Нет" увеличиваем кнопку "Да" и перемещаем кнопку "Нет"
+        noButton.addEventListener('click', () => {
+            // Увеличиваем кнопку "Да"
+            const currentFontSize = parseFloat(window.getComputedStyle(yesButton).fontSize);
+            yesButton.style.fontSize = `${currentFontSize + 5}px`;
+
+            // Перемещаем кнопку "Нет" в случайное место, но в пределах экрана
+            const maxX = window.innerWidth - noButton.offsetWidth; // Максимальная координата X
+            const maxY = window.innerHeight - noButton.offsetHeight; // Максимальная координата Y
+
+            const x = Math.random() * maxX;
+            const y = Math.random() * maxY;
+
+            // Ограничиваем координаты, чтобы кнопка не выходила за пределы экрана
+            noButton.style.position = 'absolute';
+            noButton.style.left = `${Math.max(0, Math.min(x, maxX))}px`;
+            noButton.style.top = `${Math.max(0, Math.min(y, maxY))}px`;
+        });
+    </script>
+</body>
+</html>
